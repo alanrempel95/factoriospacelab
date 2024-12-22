@@ -213,6 +213,7 @@ function totalThrust(thrusterCount, thrusterQuality, thrusterDuty) {
   //thrusterRatio = effectivity * fluidUsage - I got this from interpolation, but I don't see it anywhere in the code or API Docs.
   var fluidUsage, effectivity, thrusterRatio, qualityIndex, singleThrust, totalThrust, singleFluidUsage, totalFluidUsage;
   const thrustQualityArray = [100, 130, 160, 190, 250]; //doesn't match the documentation, but since thrusterRatio goes up to 102% I think this is correct
+  const fluidUsageQualityArray = [60, 78, 96, 114, 132]; //pattern here is 1, 1.3 1.6, 1.9, 2.2 - doesn't end with 2.5 like almost everything else. confirm.
   const qualityArray = ["Normal","Uncommon","Rare","Epic","Legendary"];
   if(thrusterDuty<=0.1) {
     fluidUsage = 0.1;
@@ -228,7 +229,7 @@ function totalThrust(thrusterCount, thrusterQuality, thrusterDuty) {
   qualityIndex = qualityArray.indexOf(thrusterQuality);
   singleThrust = thrusterRatio * thrustQualityArray[qualityIndex];
   totalThrust = singleThrust * thrusterCount;
-  singleFluidUsage = fluidUsage * thrustQualityArray[qualityIndex];
+  singleFluidUsage = fluidUsage * fluidUsageQualityArray[qualityIndex];
   totalFluidUsage = singleFluidUsage * thrusterCount;
   return [totalThrust, totalFluidUsage];
 }
