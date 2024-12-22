@@ -217,7 +217,7 @@ function totalThrust(thrusterCount, thrusterQuality, thrusterDuty) {
   if(thrusterDuty<=0.1) {
     fluidUsage = 0.1;
     effectivity = 1.0;
-  } else if(thrusterDuty >=0.8 {
+  } else if(thrusterDuty >=0.8) {
     fluidUsage = 2.0;
     effectivity = 0.51;
   } else {
