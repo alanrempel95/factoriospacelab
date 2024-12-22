@@ -245,14 +245,14 @@ function calculateConstants() {
   dragCoefficient = 0.5 * shipWidth;
   totalThrustAmount = totalThrust(thrusterCount, thrusterQuality, thrusterDuty);
   adjustedThrust = finalThrust(totalThrustAmount, shipWeight);
-  maxSpeed = maxVelocity(adjustedThrust, shipWeight, shipWidth);
+  maxSpeed = maxVelocity(adjustedThrust, shipWidth, shipWeight);
   transitTime = accelerationTime(routeLength, 0, adjustedThrust, shipWidth, shipWeight);
   slowdownTime = decelerationTime(maxSpeed, shipWidth, shipWeight); //this may not reach zero, in which case starting speed when leaving is > 0 (not implemented 12/22/24)
 
-  document.getElementsByTagName("td")[0].innerHTML = maxSpeed;
-  document.getElementsByTagName("td")[1].innerHTML = transitTime;
-  document.getElementsByTagName("td")[2].innerHTML = slowdownTime;
-  document.getElementsByTagName("td")[3].innerHTML = totalThrustAmount;
-  document.getElementsByTagName("td")[4].innerHTML = adjustedThrust;
-  document.getElementsByTagName("td")[5].innerHTML = dragCoefficient;
+  document.getElementsByTagName("td")[0].innerHTML = Math.round((maxSpeed + Number.EPSILON) * 100) / 100;
+  document.getElementsByTagName("td")[1].innerHTML = Math.round((transitTime + Number.EPSILON) * 100) / 100;
+  document.getElementsByTagName("td")[2].innerHTML = Math.round((slowdownTime + Number.EPSILON) * 100) / 100;
+  document.getElementsByTagName("td")[3].innerHTML = Math.round((totalThrustAmount + Number.EPSILON) * 100) / 100;
+  document.getElementsByTagName("td")[4].innerHTML = Math.round((adjustedThrust + Number.EPSILON) * 100) / 100;
+  document.getElementsByTagName("td")[5].innerHTML = Math.round((dragCoefficient + Number.EPSILON) * 100) / 100;
 }
