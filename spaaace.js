@@ -243,7 +243,7 @@ function calculateConstants() {
 
   var dragCoefficient, totalThrustAmount, adjustedThrust, maxSpeed, transitTime, slowdownTime;
   dragCoefficient = 0.5 * shipWidth;
-  [totalThrustAmount, totalFluidUsage] = totalThrust(thrusterCount, thrusterQuality, thrusterDuty)();
+  [totalThrustAmount, totalFluidUsage] = totalThrust(thrusterCount, thrusterQuality, thrusterDuty);
   adjustedThrust = finalThrust(totalThrustAmount, shipWeight);
   maxSpeed = maxVelocity(adjustedThrust, shipWidth, shipWeight);
   transitTime = accelerationTime(routeLength, 0, adjustedThrust, shipWidth, shipWeight);
