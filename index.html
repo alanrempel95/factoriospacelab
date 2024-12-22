@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>spaaace</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script> 
   </head>
   <body>
   
     <h1>Ship Design</h1>
     <form>
       <label for="shipWidth">Ship Width (tiles)</label>
-      <input type="number" id="shipWidth" name="shipWidth" value=8>
+      <input type="number" id="shipWidth" name="shipWidth" value=8><br/>
       <label for="shipWeight">Ship Weight (tons)</label>
-      <input type="number" id="shipWeight" name="shipWeight" value=300>
+      <input type="number" id="shipWeight" name="shipWeight" value=300><br/>
+      <label for="routeLength">Route Length (km)</label>
+      <input type="number" id="routeLength" name="routeLength" value=15000><br/>
       <label for="thrusterCount">Number of Thrusters</label>
-      <input type="number" id="thrusterCount" name="thrusterCount" value=2>
+      <input type="number" id="thrusterCount" name="thrusterCount" value=2><br/>
       <label for="thrusterQuality">Thruster Quality</label>
       <select id="thrusterQuality" name="thrusterQuality">
         <option value="Normal" selected>Normal</option>
@@ -23,10 +27,10 @@
         <option value="Rare">Rare</option>
         <option value="Epic">Epic</option>
         <option value="Legendary">Legendary</option>
-      </select>
+      </select><br/>
       <label for="thrusterDuty">Thruster Duty (%)</label>
-      <input type="number" id="thrusterDuty" name="thrusterDuty" value=100>
-      <button type="button" onclick="alert('Hello World!')">Calculate</button> 
+      <input type="number" id="thrusterDuty" name="thrusterDuty" value=100><br/>
+      <button type="button" onclick="alert('Hello World!')">Calculate</button><br/>
     </form> 
 
     <table>
@@ -41,5 +45,8 @@
         <td>???</td>
       </tr>
     </table>
+    <canvas id="accelerationChart" style="width:100%;max-width:700px"></canvas>
+    <canvas id="velocityChart" style="width:100%;max-width:700px"></canvas>
+    <canvas id="positionChart" style="width:100%;max-width:700px"></canvas>
   </body>
 </html> 
