@@ -244,7 +244,7 @@ function calculateConstants() {
   var dragCoefficient, totalThrustAmount, adjustedThrust, maxSpeed, transitTime, slowdownTime;
   dragCoefficient = 0.5 * shipWidth;
   totalThrustAmount = totalThrust(thrusterCount, thrusterQuality, thrusterDuty);
-  adjustedThrust = finalThrust(totalThrustAmount, weight);
+  adjustedThrust = finalThrust(totalThrustAmount, shipWeight);
   maxSpeed = maxVelocity(adjustedThrust, shipWeight, shipWidth);
   transitTime = accelerationTime(routeLength, 0, adjustedThrust, shipWidth, shipWeight);
   slowdownTime = decelerationTime(maxSpeed, shipWidth, shipWeight); //this may not reach zero, in which case starting speed when leaving is > 0 (not implemented 12/22/24)
