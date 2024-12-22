@@ -205,3 +205,44 @@ function accelerationTime(deltaPosition, initialVelocity, thrust, width, weight)
   time = (a+b)/2; //s
   return time;
 }
+
+function totalThrust(thrusterCount, thrusterQuality, thrusterDuty) {
+  //from C:\Program Files (x86)\Steam\steamapps\common\Factorio\data\space-age\prototypes\entity\entities.lua, lines 814-815, version 2.0.28
+  //min_performance = {fluid_volume = 0.1, fluid_usage = 0.1, effectivity = 1},
+  //max_performance = {fluid_volume = 0.8, fluid_usage = 2, effectivity = 0.51},
+  //thrusterRatio = effectivity * fluidUsage - I got this from interpolation, but I don't see it anywhere in the code or API Docs.
+  var fluidUsage, effectivity, thrusterRatio, qualityIndex, singleThrust, totalThrust, singleFluidUsage, totalFluidUsage;
+  const thrustQualityArray = [100, 130, 160, 190, 250]; //doesn't match the documentation, but since thrusterRatio goes up to 102% I think this is correct
+  const qualityArray = ["Normal","Uncommon","Rare","Epic","Legendary"];
+  if(thrusterDuty<=0.1) {
+    fluidUsage = 0.1;
+    effectivity = 1.0;
+  } else if(thrusterDuty >=0.8 {
+    fluidUsage = 2.0;
+    effectivity = 0.51;
+  } else {
+    fluidUsage = (2-0.1)/(0.8-0.1)*(thrusterDuty-0.1)+0.1;
+    effectivity = (0.51-1.0)/(0.8-0.1)*(thrusterDuty-0.1)+1;
+  }
+  thrusterRatio = effectivity * fluidUsage;
+  qualityIndex = qualityArray.indexOf(thrusterQuality);
+  singleThrust = thrusterRatio * thrustQualityArray[qualityIndex];
+  totalThrust = singleThrust * thrusterCount;
+  singleFluidUsage = fluidUsage * thrustQualityArray[qualityIndex];
+  totalFluidUsage = singleFluidUsage * thrusterCount;
+  return totalThrust;
+}
+
+function calculateConstants() {
+  const shipWidth = document.getElementById("shipWidth").value;
+  const shipWeight = document.getElementById("shipWeight").value;
+  const routeLength = document.getElementById("routeLength").value;
+  const thrusterCount = document.getElementById("thrusterCount").value;
+  const thrusterQuality = document.getElementById("thrusterQuality").value;
+  const thrusterDuty = document.getElementById("thrusterDuty").value;
+
+  var dragCoefficient, totalThrustAmount, adjustedThrust, maxSpeed, transitTime, decelerationTime;
+  dragCoefficient = 0.5 * shipWidth;
+  totalThrustAmount = totalThrust(thrusterCount, thrusterQuality, thrusterDuty);
+  adjustedThrust = finalThrust(totalThrustAmount, weight);
+}
