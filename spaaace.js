@@ -1,24 +1,31 @@
 function dragForce(velocity, width) {
-  var cd;
-  var Fd;
+  // From C:\Program Files (x86)\Steam\steamapps\common\Factorio\data\core\prototypes\utility-constants.lua, lines 509-517, version 2.0.28
+  var cd; //---
+  var Fd; //MN
+  // -- drag_coefficient = width * 0.5
+  //  -- drag = ((1500 * speed * speed + 1500 * abs(speed)) * drag_coefficient + 10000) * sign(speed)
   cd = 0.5 * width
   Fd = ((1500*(velocity/60)^2+1500*(velocity/60))*cd+10000)/1000;
   return Fd;
 }
 
 function finalThrust(thrust, weight) {
-  var Ft;
+  // From C:\Program Files (x86)\Steam\steamapps\common\Factorio\data\core\prototypes\utility-constants.lua, lines 509-517, version 2.0.28
+  var Ft; //MN
+  // -- final_thrust = thrust / (1 + weight / 10000000)
   Ft = thrust/(1+weight/10000)
   return Ft;
 }
 
 function netAcceleration(thrust, velocity, weight) {
-  var Ft;
-  var Fd;
-  var acceleration;
+  // From C:\Program Files (x86)\Steam\steamapps\common\Factorio\data\core\prototypes\utility-constants.lua, lines 509-517, version 2.0.28
+  var Ft; //MN
+  var Fd; //MN
+  var acceleration; //km/s^2
+  // -- acceleration = (final_thrust - drag) / weight / 60
   Ft = finalThrust(thrust, weight);
   Fd = dragForce(velocity, width);
-  acceleration = (Ft-Fd)/weight*60;
+  acceleration = (Ft-Fd)/weight*60; //UOM bug in GUI
 }
 
 function testVelocity() {
@@ -32,7 +39,7 @@ function testVelocity() {
 }
 
 function maxVelocity(thrust, width, weight) {
-  var Ft;
+  var Ft; //MN
   var A, B, C, D;
   Ft = finalThrust(thrust, weight);
   A = 1;
@@ -43,7 +50,7 @@ function maxVelocity(thrust, width, weight) {
 }
 
 function acceleratingVelocity(thrust, width, weight, time, progress = "Ignore") {
-  var Ft, Va;
+  var Ft, Va; //MN, km/s
   var A, B, C, D, E, tau;
   Ft = finalThrust(thrust, weight);
   A = 1;
@@ -62,7 +69,7 @@ function acceleratingVelocity(thrust, width, weight, time, progress = "Ignore") 
 }
 
 function acceleratingPosition(thrust, width, weight, time, progress = "Ignore") {
-  var Ft, Va;
+  var Ft, Va, Xa; //MN, km/s, km
   var A, B, C, D, E, tau;
   Ft = finalThrust(thrust, weight);
   A = 1;
@@ -92,7 +99,7 @@ function testDVelocity() {
 }
 
 function deceleratingVelocity(initialVelocity, width, weight, time, progress = "Ignore") {
-  var A, B, C, D, E, Vd;
+  var A, B, C, D, E, Vd; //km/s
   A = -(12000*weight)/(5*0.5*width);
   B = 60;
   C = (10)/(5*0.5*width/12000);
@@ -108,7 +115,7 @@ function deceleratingVelocity(initialVelocity, width, weight, time, progress = "
 }
 
 function deceleratingPosition(initialPosition, initialVelocity, width, weight, time, progress = "Ignore") {
-  var A, B, C, D, E, F, Xd;
+  var A, B, C, D, E, F, Xd; //km
   A = -(12000*weight)/(5*0.5*width);
   B = 60;
   C = (10)/(5*0.5*width/12000);
@@ -125,7 +132,7 @@ function deceleratingPosition(initialPosition, initialVelocity, width, weight, t
 }
 
 function decelerationTime(initialVelocity, width, weight) {
-  var A, B, C, D, E, F, td;
+  var A, B, C, D, E, F, td; //s
   A = -(12000*weight)/(5*0.5*width);
   B = 60;
   C = (10)/(5*0.5*width/12000);
@@ -137,7 +144,8 @@ function decelerationTime(initialVelocity, width, weight) {
 }
 
 function accelerationTime(deltaPosition, initialVelocity, thrust, width, weight) {
-  //returns time (s) from transiting deltaPosition (km) using ITP method
+  //returns time (s) from transiting deltaPosition (km) using ITP method, from https://en.wikipedia.org/wiki/ITP_method#The_algorithm
+  var a, b, tol, k1, k2, n0, n1_2, n_max, j, y_a, y_b, x1_2, r, del, x_f, sig, x_t, x_itp, y_itp, time;
   
   //Inputs:
   a = 0; //s, lower bound
@@ -194,6 +202,6 @@ function accelerationTime(deltaPosition, initialVelocity, thrust, width, weight)
   }
   
   //Output
-  time = (a+b)/2;
+  time = (a+b)/2; //s
   return time;
 }
