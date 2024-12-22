@@ -230,7 +230,7 @@ function totalThrust(thrusterCount, thrusterQuality, thrusterDuty) {
   totalThrust = singleThrust * thrusterCount;
   singleFluidUsage = fluidUsage * thrustQualityArray[qualityIndex];
   totalFluidUsage = singleFluidUsage * thrusterCount;
-  return totalThrust;
+  return [totalThrust, totalFluidUsage];
 }
 
 function calculateConstants() {
@@ -239,11 +239,11 @@ function calculateConstants() {
   const routeLength = document.getElementById("routeLength").value;
   const thrusterCount = document.getElementById("thrusterCount").value;
   const thrusterQuality = document.getElementById("thrusterQuality").value;
-  const thrusterDuty = document.getElementById("thrusterDuty").value;
+  const thrusterDuty = document.getElementById("thrusterDuty").value / 100;
 
   var dragCoefficient, totalThrustAmount, adjustedThrust, maxSpeed, transitTime, slowdownTime;
   dragCoefficient = 0.5 * shipWidth;
-  totalThrustAmount = totalThrust(thrusterCount, thrusterQuality, thrusterDuty);
+  [totalThrustAmount, totalFluidUsage] = totalThrust(thrusterCount, thrusterQuality, thrusterDuty)();
   adjustedThrust = finalThrust(totalThrustAmount, shipWeight);
   maxSpeed = maxVelocity(adjustedThrust, shipWidth, shipWeight);
   transitTime = accelerationTime(routeLength, 0, adjustedThrust, shipWidth, shipWeight);
@@ -255,4 +255,5 @@ function calculateConstants() {
   document.getElementsByTagName("td")[3].innerHTML = Math.round((totalThrustAmount + Number.EPSILON) * 100) / 100;
   document.getElementsByTagName("td")[4].innerHTML = Math.round((adjustedThrust + Number.EPSILON) * 100) / 100;
   document.getElementsByTagName("td")[5].innerHTML = Math.round((dragCoefficient + Number.EPSILON) * 100) / 100;
+  document.getElementsByTagName("td")[6].innerHTML = Math.round((totalFluidUsage + Number.EPSILON) * 100) / 100;
 }
