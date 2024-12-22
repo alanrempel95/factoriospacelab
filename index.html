@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="styles.css">
     <title>spaaace</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
-    </script> 
+    </script>
+    <script src="spaaace.js"></script>
   </head>
   <body>
   
@@ -46,7 +47,7 @@
         <button type="button" onclick="calculateConstants()">Calculate</button>
       </p>
     </form> 
-
+    <br/>
     <table id="constantOutputs">
       <tr>
         <th>Maximum Speed (km/s)</th>
@@ -65,7 +66,7 @@
         <td>???</td>
       </tr>
     </table>
-    
+    <br/>
     <table id="variableOutputs">
       <tr>
         <th>Drag Force (MN)</th>
@@ -75,6 +76,7 @@
       </tr>
       <!--Add variable number of table rows programmatically?-->
     </table>
+    <br/>
     <canvas id="accelerationChart" style="width:100%;max-width:700px"></canvas>
     <canvas id="velocityChart" style="width:100%;max-width:700px"></canvas>
     <canvas id="positionChart" style="width:100%;max-width:700px"></canvas>
