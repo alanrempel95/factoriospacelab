@@ -9,6 +9,7 @@ p {
 }
 label {
   display: table-cell;
+  padding: 0px 10px 0px 0px;
 }
 input {
   display: table-cell;
