@@ -26,6 +26,7 @@ function netAcceleration(thrust, width, weight, velocity) {
   Ft = finalThrust(thrust, weight);
   Fd = dragForce(velocity, width);
   acceleration = (Ft-Fd)/weight*60; //UOM bug in GUI
+  return acceleration;
 }
 
 function testVelocity() {
