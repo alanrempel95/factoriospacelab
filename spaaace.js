@@ -261,19 +261,65 @@ function calculateConstants() {
 
   t_inc = transitTime / numberOfChartPoints; //s
   t_i = 0; //s
-  const xValues = [];
-  const yValues = [];
+  const xValues = []; //time, s
+  const aValues = []; //acceleration, km/s^2
+  const vValues = []; //velocity, km/s
+  const yValues = []; //position, km
   var shipVelocity;
   
   for (let i=0;i<numberOfChartPoints+1; i++) {
     t_i = t_inc * i;
     xValues.push(Math.round((t_i + Number.EPSILON) * 100) / 100);
-    shipVelocity = acceleratingVelocity(adjustedThrust, shipWidth, shipWeight, t_i, progress = "Ignore");
-    console.log(shipVelocity);
-    yValues.push(Math.round((shipVelocity + Number.EPSILON) * 100) / 100);
+    shipPosition = acceleratingPosition(totalThrustAmount, shipWidth, shipWeight, t_i, progress = "Ignore");
+    shipVelocity = acceleratingVelocity(totalThrustAmount, shipWidth, shipWeight, t_i, progress = "Ignore");
+    //console.log(shipVelocity);
+    shipAcceleration = netAcceleration(totalThrustAmount, shipVelocity, shipWeight);
+    yValues.push(Math.round((shipPosition + Number.EPSILON) * 100) / 100);
+    vValues.push(Math.round((shipVelocity + Number.EPSILON) * 100) / 100);
+    aValues.push(Math.round((shipAcceleration + Number.EPSILON) * 100) / 100);
   }
   
   new Chart("accelerationChart", {
+    type: "line",
+    data: {
+      labels: xValues,
+      datasets: [{
+        fill: false,
+        lineTension: 0,
+        backgroundColor: "rgba(0,0,255,1.0)",
+        borderColor: "rgba(0,0,255,0.1)",
+        data: aValues
+      }]
+    },
+    options: {
+      legend: {display: false},
+      scales: {
+        yAxes: [{ticks: {min:-100, max:100}}],
+      }
+    }
+  });
+
+  new Chart("velocityChart", {
+    type: "line",
+    data: {
+      labels: xValues,
+      datasets: [{
+        fill: false,
+        lineTension: 0,
+        backgroundColor: "rgba(0,0,255,1.0)",
+        borderColor: "rgba(0,0,255,0.1)",
+        data: vValues
+      }]
+    },
+    options: {
+      legend: {display: false},
+      scales: {
+        yAxes: [{ticks: {min:0, max:500}}],
+      }
+    }
+  });
+
+  new Chart("positionChart", {
     type: "line",
     data: {
       labels: xValues,
@@ -288,7 +334,7 @@ function calculateConstants() {
     options: {
       legend: {display: false},
       scales: {
-        yAxes: [{ticks: {min:0, max:500}}],
+        yAxes: [{ticks: {min:0, max:20000}}],
       }
     }
   });
