@@ -288,7 +288,7 @@ function calculateConstants() {
     options: {
       legend: {display: false},
       scales: {
-        yAxes: [{ticks: {min: Math.min(yValues), max: Math.max(yValues)}}],
+        yAxes: [{ticks: {min:0, max:500}}],
       }
     }
   });
