@@ -263,13 +263,13 @@ function calculateConstants() {
   t_i = 0; //s
   const xValues = [];
   const yValues = [];
-  var shipAcceleration;
+  var shipVelocity;
   
   for (let i=0;i<numberOfChartPoints; i++) {
-    t_i = t_i + t_inc * i;
-    xValues.push(t_i);
-    shipAcceleration = acceleratingPosition(adjustedThrust, shipWidth, shipWeight, t_i, progress = "Ignore");
-    yValues.push(shipAcceleration);
+    t_i = t_inc * i;
+    xValues.push(Math.round((t_i + Number.EPSILON) * 100) / 100);
+    shipVelocity = acceleratingVelocity(adjustedThrust, shipWidth, shipWeight, t_i, progress = "Ignore");
+    yValues.push(Math.round((shipVelocity + Number.EPSILON) * 100) / 100);
   }
   
   new Chart("accelerationChart", {
