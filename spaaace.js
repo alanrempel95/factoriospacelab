@@ -269,7 +269,7 @@ function calculateConstants() {
     t_i = t_inc * i;
     xValues.push(Math.round((t_i + Number.EPSILON) * 100) / 100);
     shipVelocity = acceleratingVelocity(adjustedThrust, shipWidth, shipWeight, t_i, progress = "Ignore");
-    Console.log(shipVelocity);
+    console.log(shipVelocity);
     yValues.push(Math.round((shipVelocity + Number.EPSILON) * 100) / 100);
   }
   
