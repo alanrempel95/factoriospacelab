@@ -265,7 +265,7 @@ function calculateConstants() {
   const aValues = []; //acceleration, km/s^2
   const vValues = []; //velocity, km/s
   const yValues = []; //position, km
-  var shipVelocity;
+  var shipVelocity, shipPosition, shipAcceleration;
   
   for (let i=0;i<numberOfChartPoints+1; i++) {
     t_i = t_inc * i;
