@@ -4,7 +4,7 @@ function dragForce(velocity, width) {
   var Fd; //MN
   // -- drag_coefficient = width * 0.5
   //  -- drag = ((1500 * speed * speed + 1500 * abs(speed)) * drag_coefficient + 10000) * sign(speed)
-  cd = 0.5 * width
+  cd = 0.5 * width;
   Fd = ((1500*(velocity/60)^2+1500*(velocity/60))*cd+10000)/1000;
   return Fd;
 }
@@ -13,7 +13,7 @@ function finalThrust(thrust, weight) {
   // From C:\Program Files (x86)\Steam\steamapps\common\Factorio\data\core\prototypes\utility-constants.lua, lines 509-517, version 2.0.28
   var Ft; //MN
   // -- final_thrust = thrust / (1 + weight / 10000000)
-  Ft = thrust/(1+weight/10000)
+  Ft = thrust/(1+weight/10000);
   return Ft;
 }
 
