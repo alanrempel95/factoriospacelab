@@ -65,6 +65,8 @@ function acceleratingVelocity(thrust, width, weight, time, progress = "Ignore") 
     Va = Va + 10;
   } else if(progress="Arriving") {
     Va = Va - 10;
+  } else {
+    Va = Va;
   }
   return Va;
 }
@@ -84,6 +86,8 @@ function acceleratingPosition(thrust, width, weight, time, progress = "Ignore") 
     Xa = Xa + 10*time;
   } else if(progress="Arriving") {
     Xa = Xa - 10*time;
+  } else {
+    Xa = Xa;
   }
   return Xa;
 }
@@ -133,6 +137,7 @@ function deceleratingPosition(initialPosition, initialVelocity, width, weight, t
 }
 
 function decelerationTime(initialVelocity, width, weight) {
+  //Revisit; this is resulting in too long of a time
   var A, B, C, D, E, F, td; //s
   A = -(12000*weight)/(5*0.5*width);
   B = 60;
@@ -146,6 +151,7 @@ function decelerationTime(initialVelocity, width, weight) {
 
 function accelerationTime(deltaPosition, initialVelocity, thrust, width, weight) {
   //returns time (s) from transiting deltaPosition (km) using ITP method, from https://en.wikipedia.org/wiki/ITP_method#The_algorithm
+  //needs to be corrected for the +/-10 km/s speed adjustment at L/s
   var a, b, tol, k1, k2, n0, n1_2, n_max, j, y_a, y_b, x1_2, r, del, x_f, sig, x_t, x_itp, y_itp, time;
   
   //Inputs:
@@ -271,8 +277,8 @@ function calculateConstants() {
   for (let i=0;i<numberOfChartPoints+1; i++) {
     t_i = t_inc * i;
     xValues.push(Math.round((t_i + Number.EPSILON) * 100) / 100);
-    shipPosition = acceleratingPosition(totalThrustAmount, shipWidth, shipWeight, t_i, progress = "Ignore");
-    shipVelocity = acceleratingVelocity(totalThrustAmount, shipWidth, shipWeight, t_i, progress = "Ignore");
+    shipPosition = acceleratingPosition(totalThrustAmount, shipWidth, shipWeight, t_i, "Ignore");
+    shipVelocity = acceleratingVelocity(totalThrustAmount, shipWidth, shipWeight, t_i, "Ignore");
     //console.log(shipVelocity);
     shipAcceleration = netAcceleration(totalThrustAmount, shipWidth, shipWeight, shipVelocity);
     yValues.push(Math.round((shipPosition + Number.EPSILON) * 100) / 100);
