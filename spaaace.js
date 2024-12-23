@@ -265,10 +265,11 @@ function calculateConstants() {
   const yValues = [];
   var shipVelocity;
   
-  for (let i=0;i<numberOfChartPoints; i++) {
+  for (let i=0;i<numberOfChartPoints+1; i++) {
     t_i = t_inc * i;
     xValues.push(Math.round((t_i + Number.EPSILON) * 100) / 100);
     shipVelocity = acceleratingVelocity(adjustedThrust, shipWidth, shipWeight, t_i, progress = "Ignore");
+    Console.log(shipVelocity);
     yValues.push(Math.round((shipVelocity + Number.EPSILON) * 100) / 100);
   }
   
