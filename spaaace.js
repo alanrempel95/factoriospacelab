@@ -61,9 +61,9 @@ function acceleratingVelocity(thrust, width, weight, time, progress = "Ignore") 
   E = (-B-Math.sqrt(B**2-4*A*C))/(2*A);
   tau = 12000*weight/(5*0.5*width)/60;
   Va = D*(1-Math.E**((E-D)*time/tau))/(1-D/E*Math.E**((E-D)*time/tau));
-  if(progress="Departing") {
+  if(progress=="Departing") {
     Va = Va + 10;
-  } else if(progress="Arriving") {
+  } else if(progress=="Arriving") {
     Va = Va - 10;
   } else {
     Va = Va;
@@ -82,9 +82,9 @@ function acceleratingPosition(thrust, width, weight, time, progress = "Ignore") 
   E = (-B-Math.sqrt(B**2-4*A*C))/(2*A);
   tau = 12000*weight/(5*0.5*width)/60;
   Xa = tau*Math.log((D*Math.E**((D-E)*time/tau)-E)/(D-E))-D*time;
-  if(progress="Departing") {
+  if(progress=="Departing") {
     Xa = Xa + 10*time;
-  } else if(progress="Arriving") {
+  } else if(progress=="Arriving") {
     Xa = Xa - 10*time;
   } else {
     Xa = Xa;
@@ -111,9 +111,9 @@ function deceleratingVelocity(initialVelocity, width, weight, time, progress = "
   D = Math.sqrt(4*C-B**2);
   E = (2*initialVelocity+B)/D;
   Vd =1/2*(D*Math.tan(time*60*D/(2*A)+Math.atan(E))-B);
-  if(progress="Departing") {
+  if(progress=="Departing") {
     Vd = Vd + 10;
-  } else if(progress="Arriving") {
+  } else if(progress=="Arriving") {
     Vd = Vd - 10;
   }
   return Vd;
@@ -128,9 +128,9 @@ function deceleratingPosition(initialPosition, initialVelocity, width, weight, t
   E = (2*initialVelocity+B)/D;
   F = 60*D/(2*A);
   Xd = initialPosition - A/60*Math.log(Math.cos(F*time+Math.atan(E))/Math.cos(Math.atan(E))) + B/2*time;
-  if(progress="Departing") {
+  if(progress=="Departing") {
     Xd = Xd + 10*time;
-  } else if(progress="Arriving") {
+  } else if(progress=="Arriving") {
     Xd = Xd - 10*time;
   }
   return Xd;
