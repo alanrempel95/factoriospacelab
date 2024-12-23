@@ -299,7 +299,7 @@ function calculateConstants() {
     options: {
       legend: {display: false},
       scales: {
-        yAxes: [{ticks: {min:minA, max:maxA}}],
+        yAxes: [{ticks: {min:"minA", max:"maxA"}}],
       }
     }
   });
@@ -319,7 +319,7 @@ function calculateConstants() {
     options: {
       legend: {display: false},
       scales: {
-        yAxes: [{ticks: {min:minV, max:maxV}}],
+        yAxes: [{ticks: {min:"minV", max:"maxV"}}],
       }
     }
   });
@@ -339,7 +339,7 @@ function calculateConstants() {
     options: {
       legend: {display: false},
       scales: {
-        yAxes: [{ticks: {min:0, max:routeLength}}],
+        yAxes: [{ticks: {min:0, max:"routeLength"}}],
       }
     }
   });
