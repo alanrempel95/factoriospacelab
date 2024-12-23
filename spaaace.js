@@ -266,7 +266,7 @@ function calculateConstants() {
   const aValues = []; //acceleration, km/s^2
   const vValues = []; //velocity, km/s
   const yValues = []; //position, km
-  var shipVelocity, shipPosition, shipAcceleration;
+  var shipVelocity, shipPosition, shipAcceleration, minA, maxA, minV, maxV;
   
   for (let i=0;i<numberOfChartPoints+1; i++) {
     t_i = t_inc * i;
@@ -279,6 +279,10 @@ function calculateConstants() {
     vValues.push(Math.round((shipVelocity + Number.EPSILON) * 100) / 100);
     aValues.push(Math.round((shipAcceleration + Number.EPSILON) * 100) / 100);
   }
+  minA = Math.min(aValues);
+  maxA = Math.max(aValues);
+  minV = Math.min(vValues);
+  maxV = Math.max(vValues);
   
   new Chart("accelerationChart", {
     type: "line",
@@ -295,7 +299,7 @@ function calculateConstants() {
     options: {
       legend: {display: false},
       scales: {
-        yAxes: [{ticks: {min:-100, max:100}}],
+        yAxes: [{ticks: {min:minA, max:maxA}}],
       }
     }
   });
@@ -315,7 +319,7 @@ function calculateConstants() {
     options: {
       legend: {display: false},
       scales: {
-        yAxes: [{ticks: {min:0, max:500}}],
+        yAxes: [{ticks: {min:minV, max:maxV}}],
       }
     }
   });
@@ -335,7 +339,7 @@ function calculateConstants() {
     options: {
       legend: {display: false},
       scales: {
-        yAxes: [{ticks: {min:0, max:20000}}],
+        yAxes: [{ticks: {min:0, max:routeLength}}],
       }
     }
   });
