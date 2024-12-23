@@ -241,7 +241,8 @@ function calculateConstants() {
   const thrusterCount = document.getElementById("thrusterCount").value;
   const thrusterQuality = document.getElementById("thrusterQuality").value;
   const thrusterDuty = document.getElementById("thrusterDuty").value / 100;
-
+  const numberOfChartPoints = 100;
+  
   var dragCoefficient, totalThrustAmount, adjustedThrust, maxSpeed, transitTime, slowdownTime;
   dragCoefficient = 0.5 * shipWidth;
   [totalThrustAmount, totalFluidUsage] = totalThrust(thrusterCount, thrusterQuality, thrusterDuty);
@@ -257,4 +258,37 @@ function calculateConstants() {
   document.getElementsByTagName("td")[4].innerHTML = Math.round((adjustedThrust + Number.EPSILON) * 100) / 100;
   document.getElementsByTagName("td")[5].innerHTML = Math.round((dragCoefficient + Number.EPSILON) * 100) / 100;
   document.getElementsByTagName("td")[6].innerHTML = Math.round((totalFluidUsage + Number.EPSILON) * 100) / 100;
+
+  t_inc = transitTime / numberOfChartPoints; //s
+  t_i = 0; //s
+  const xValues = [];
+  const yValues = [];
+  var shipAcceleration;
+  
+  for (let i=0;i<numberOfChartPoints; i++) {
+    t_i = t_i + t_inc * i;
+    xValues.push(t_i);
+    shipAcceleration = acceleratingPosition(adjustedThrust, shipWidth, shipWeight, t_i, progress = "Ignore");
+    yValues.push(shipAcceleration);
+  }
+  
+  new Chart("accelerationChart", {
+    type: "line",
+    data: {
+      labels: xValues,
+      datasets: [{
+        fill: false,
+        lineTension: 0,
+        backgroundColor: "rgba(0,0,255,1.0)",
+        borderColor: "rgba(0,0,255,0.1)",
+        data: yValues
+      }]
+    },
+    options: {
+      legend: {display: false},
+      scales: {
+        yAxes: [{ticks: {min: Math.min(yValues), max: Math.max(yValues)}}],
+      }
+    }
+  });
 }
