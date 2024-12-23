@@ -17,7 +17,7 @@ function finalThrust(thrust, weight) {
   return Ft;
 }
 
-function netAcceleration(thrust, velocity, weight) {
+function netAcceleration(thrust, width, weight, velocity) {
   // From C:\Program Files (x86)\Steam\steamapps\common\Factorio\data\core\prototypes\utility-constants.lua, lines 509-517, version 2.0.28
   var Ft; //MN
   var Fd; //MN
@@ -273,7 +273,7 @@ function calculateConstants() {
     shipPosition = acceleratingPosition(totalThrustAmount, shipWidth, shipWeight, t_i, progress = "Ignore");
     shipVelocity = acceleratingVelocity(totalThrustAmount, shipWidth, shipWeight, t_i, progress = "Ignore");
     //console.log(shipVelocity);
-    shipAcceleration = netAcceleration(totalThrustAmount, shipVelocity, shipWeight);
+    shipAcceleration = netAcceleration(totalThrustAmount, shipWidth, shipWeight, shipVelocity);
     yValues.push(Math.round((shipPosition + Number.EPSILON) * 100) / 100);
     vValues.push(Math.round((shipVelocity + Number.EPSILON) * 100) / 100);
     aValues.push(Math.round((shipAcceleration + Number.EPSILON) * 100) / 100);
