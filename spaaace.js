@@ -5,7 +5,7 @@ function dragForce(velocity, width) {
   // -- drag_coefficient = width * 0.5
   //  -- drag = ((1500 * speed * speed + 1500 * abs(speed)) * drag_coefficient + 10000) * sign(speed)
   cd = 0.5 * width;
-  Fd = ((1500*(velocity/60)^2+1500*(velocity/60))*cd+10000)/1000;
+  Fd = ((1500*(velocity/60)**2+1500*(velocity/60))*cd+10000)/1000;
   return Fd;
 }
 
